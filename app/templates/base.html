@@ -1,8 +1,22 @@
 {% extends "bootstrap/base.html"%}
+{% block styles %}
+    {{super()}}
+<style>
+    ul{
+        list-style:none
+    }
+</style>
+{% endblock styles %}
 {% block navbar%}
 <nav class="navbar navbar-default">
     <div class="navbar-header">
-        <a href="#" class="navbar-brand">菜鸟教程</a>
+        <a href="#" class="navbar-brand">
+            {% if g.user%}
+                {{g.user.username}}
+            {% else %}
+                no name
+            {%endif%}
+        </a>
     </div>
     <ul class="nav navbar-nav">
         <li class="active"><a href="#">iOS</a></li>
@@ -24,4 +38,17 @@
         </li>
     </ul>
 </nav>
+
+{% with msg = get_flashed_messages()%}
+{% if msg%}
+<div class="alert">
+    <ul>
+    {% for message in msg%}
+    <li class="alert-info" style="padding:20px">{{message}}</li>
+    {% endfor%}
+    </ul>
+</div>
+<hr/>
+{% endif%}
+{% endwith%}
 {%endblock%}
